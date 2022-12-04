@@ -9,17 +9,20 @@ function solve(x: string[]) {
     overlapping = 0;
 
   while (pos < x.length) {
-    const [e1, e2] = x[pos].split(",").map((x) => x.split("-").map(Number));
+    const [e1_start, e1_end, e2_start, e2_end] = x[pos]
+      // split on - or ,
+      .split(/-|,/g)
+      .map(Number);
 
     // fully contained
-    if (e1[0] >= e2[0] && e1[1] <= e2[1]) {
+    if (e1_start >= e2_start && e1_end <= e2_end) {
       fully_contained++;
-    } else if (e1[0] <= e2[0] && e1[1] >= e2[1]) {
+    } else if (e1_start <= e2_start && e1_end >= e2_end) {
       fully_contained++;
     }
 
     // overlapping
-    if (e1[1] >= e2[0] && e1[0] <= e2[1]) {
+    if (e1_end >= e2_start && e1_start <= e2_end) {
       overlapping++;
     }
 
